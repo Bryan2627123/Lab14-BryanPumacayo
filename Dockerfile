@@ -7,12 +7,15 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copiamos el archivo de proyecto y restauramos dependencias
-COPY ["Lab13-BryanPumacayo.csproj", "./"]
-RUN dotnet restore "Lab13-BryanPumacayo.csproj"
+# Copiamos solo el .csproj en la carpeta correcta y restauramos dependencias
+COPY ["Lab13-BryanPumacayo/Lab13-BryanPumacayo.csproj", "Lab13-BryanPumacayo/"]
+RUN dotnet restore "Lab13-BryanPumacayo/Lab13-BryanPumacayo.csproj"
 
-# Copiamos el resto del código y publicamos en Release
+# Copiamos todo el código
 COPY . .
+
+# Nos movemos dentro del proyecto y publicamos en Release
+WORKDIR /src/Lab13-BryanPumacayo
 RUN dotnet publish "Lab13-BryanPumacayo.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Etapa final: imagen liviana solo con lo necesario para correr
