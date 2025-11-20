@@ -1,0 +1,25 @@
+name: Build .NET 9 API
+
+on:
+  push:
+    branches:
+      - main  # Se ejecuta cuando subes cambios a la rama principal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build in Release
+        run: dotnet build --configuration Release --no-restore
