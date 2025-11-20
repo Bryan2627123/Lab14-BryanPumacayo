@@ -1,0 +1,6 @@
+@Lab13_BryanPumacayo_HostAddress = http://localhost:5102
+
+GET {{Lab13_BryanPumacayo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
